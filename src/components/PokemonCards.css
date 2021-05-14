@@ -1,0 +1,13 @@
+.PokemonCards {
+    margin-left: 65px;
+    margin-right: 65px;
+    padding-top: 50px;
+}
+
+.PokeCard {
+    display: inline-block;
+    vertical-align: top;
+    width: 340px;
+    height: 620px;
+    margin: 15px;
+}
