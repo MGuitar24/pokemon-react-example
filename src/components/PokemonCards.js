@@ -2,8 +2,24 @@ import "./PokemonCards.css";
 import PokeCard from "./PokeCard";
 
 const PokemonCards = ({ pokemon, setPokemon }) => {
-  const deletePoke = (pokeStateToRemove) => {
-    pokemon.splice(pokeStateToRemove, 1);
+  const deletePokecb = (pokeIndexToRemove) => {
+    pokemon.splice(pokeIndexToRemove, 1);
+    setPokemon([...pokemon]);
+  };
+
+  const shiftPokemonLeftcb = (pokeIndexToMove) => {
+    const pokemonToMove = pokemon[pokeIndexToMove];
+    const pokemonMovedTo = pokemon[pokeIndexToMove - 1];
+    pokemon[pokeIndexToMove - 1] = pokemonToMove;
+    pokemon[pokeIndexToMove] = pokemonMovedTo;
+    setPokemon([...pokemon]);
+  };
+
+  const shiftPokemonRightcb = (pokeIndexToMove) => {
+    const pokemonToMove = pokemon[pokeIndexToMove];
+    const pokemonMovedTo = pokemon[pokeIndexToMove + 1];
+    pokemon[pokeIndexToMove + 1] = pokemonToMove;
+    pokemon[pokeIndexToMove] = pokemonMovedTo;
     setPokemon([...pokemon]);
   };
 
@@ -15,7 +31,13 @@ const PokemonCards = ({ pokemon, setPokemon }) => {
         }
         return (
           <div key={pokemon.pokeName} className="PokeCard">
-            <PokeCard index={pokeindex} pokemon={pokemon} deletePokeCallback={deletePoke} />
+            <PokeCard
+              index={pokeindex}
+              pokemon={pokemon}
+              deletePokecb={deletePokecb}
+              shiftPokemonLeftcb={shiftPokemonLeftcb}
+              shiftPokemonRightcb={shiftPokemonRightcb}
+            />
           </div>
         );
       })}

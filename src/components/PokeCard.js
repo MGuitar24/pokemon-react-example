@@ -4,6 +4,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
@@ -18,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-const PokeCard = ({ index, pokemon, deletePokeCallback }) => {
+const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokemonRightcb }) => {
   const classes = useStyles();
 
   return (
@@ -35,13 +37,33 @@ const PokeCard = ({ index, pokemon, deletePokeCallback }) => {
       <CardActions>
         <IconButton
           onClick={() => {
-            deletePokeCallback(index);
+            shiftPokemonLeftcb(index);
+          }}
+          color="primary"
+          aria-label="left move card"
+          component="span"
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => {
+            deletePokecb(index);
           }}
           color="primary"
           aria-label="delete card"
           component="span"
         >
           <DeleteOutlineIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => {
+            shiftPokemonRightcb(index);
+          }}
+          color="primary"
+          aria-label="right move card"
+          component="span"
+        >
+          <ArrowForwardIcon />
         </IconButton>
       </CardActions>
     </Card>
