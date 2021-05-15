@@ -2,6 +2,7 @@ import "./PokemonCards.css";
 import PokeCard from "./PokeCard";
 
 const PokemonCards = ({ pokemon, setPokemon }) => {
+
   const deletePokecb = (pokeIndexToRemove) => {
     pokemon.splice(pokeIndexToRemove, 1);
     setPokemon([...pokemon]);

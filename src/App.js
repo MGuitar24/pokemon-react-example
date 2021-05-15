@@ -1,9 +1,15 @@
 import "./App.css";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import { useState, useEffect } from "react";
 import { pokemonRequest, genericPokemonAPIRequest } from "./api/pokemonRequest";
 import PokemonCards from "./components/PokemonCards";
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const App = () => {
   const enterPressed = (event) => {
@@ -11,6 +17,11 @@ const App = () => {
       event.preventDefault();
       onSearch(searchValue);
     }
+  };
+
+  const handleCloseSnackBar = () => {
+    setSnackBarOpen(false);
+    setNoResultSearchValue("");
   };
 
   useEffect(() => {
@@ -28,6 +39,8 @@ const App = () => {
 
   const [pokemon, setPokemon] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [noResultSearchValue, setNoResultSearchValue] = useState("");
 
   const updateValue = (e) => {
     setSearchValue(e.target.value);
@@ -38,6 +51,15 @@ const App = () => {
       return;
     }
     const pokemonResult = await pokemonRequest(searchValue);
+    if (pokemonResult.status === 404) {
+      if (snackBarOpen) {
+        setSnackBarOpen(false);
+      }
+      setNoResultSearchValue(searchValue);
+      setSnackBarOpen(true);
+      setSearchValue("");
+      return;
+    }
     if (pokemonResult.data.name && pokemonResult.data.sprites) {
       pokeState.pokeImg = pokemonResult.data.sprites.other["official-artwork"].front_default;
       pokeState.pokeName = pokemonResult.data.name;
@@ -51,13 +73,26 @@ const App = () => {
       descriptions = descriptions.filter((description, index) => descriptions.indexOf(description) === index);
       pokeState.pokeDescription = descriptions.join("");
     }
-    setPokemon([...pokemon, pokeState]);
+    const dupe = pokemon.find((poke) => poke.pokeName === pokeState.pokeName);
+    if (!dupe) {
+      setPokemon([...pokemon, pokeState]);
+    }
     setSearchValue("");
   };
 
   return (
     <>
       <div className="App">
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={snackBarOpen}
+          autoHideDuration={2000}
+          onClose={handleCloseSnackBar}
+        >
+          <Alert onClose={handleCloseSnackBar} severity="error">
+            No result found for search {noResultSearchValue}.
+          </Alert>
+        </Snackbar>
         <TextField
           style={{ margin: 0, paddingRight: 10, width: 300 }}
           id="outlined-search"
