@@ -27,7 +27,6 @@ const SearchPokemon = async (searchValue, pokemon) => {
     descriptions = descriptions.filter((description, index) => descriptions.indexOf(description) === index);
     pokeState.pokeDescription = descriptions.join("");
   }
-  console.log(pokeState);
   return { pokeState, pokemonStatus };
 };
 
