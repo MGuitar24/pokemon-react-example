@@ -5,7 +5,6 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useState, useEffect } from "react";
 import SearchPokemon from "./controller/SearchPokemon";
-import { pokemonRequest, genericPokemonAPIRequest } from "./api/pokemonRequest";
 import PokemonCards from "./components/PokemonCards";
 
 const Alert = (props) => {
