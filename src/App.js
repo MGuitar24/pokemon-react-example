@@ -43,7 +43,7 @@ const App = () => {
   const [noResultSearchValue, setNoResultSearchValue] = useState("");
 
   const updateValue = (e) => {
-    setSearchValue(e.target.value);
+    setSearchValue(e.target.value.toLowerCase());
   };
 
   const onSearch = async () => {
