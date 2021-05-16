@@ -1,7 +1,11 @@
 import { pokemonRequest, genericPokemonAPIRequest } from "../api/pokemonRequest";
-import { PokeState as pokeState } from "../App";
 
 const SearchPokemon = async (searchValue, pokemon) => {
+  const pokeState = {
+    pokeImg: undefined,
+    pokeName: undefined,
+    pokeDescription: undefined,
+  };
   const pokemonResult = await pokemonRequest(searchValue);
   const pokemonStatus = pokemonResult.status;
 
@@ -23,6 +27,7 @@ const SearchPokemon = async (searchValue, pokemon) => {
     descriptions = descriptions.filter((description, index) => descriptions.indexOf(description) === index);
     pokeState.pokeDescription = descriptions.join("");
   }
+  console.log(pokeState);
   return { pokeState, pokemonStatus };
 };
 

@@ -11,12 +11,6 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
 
-const PokeState = {
-  pokeImg: undefined,
-  pokeName: undefined,
-  pokeDescription: undefined,
-};
-
 const App = () => {
   const enterPressed = (event) => {
     if (event.key === "Enter") {
@@ -100,5 +94,3 @@ const App = () => {
 };
 
 export default App;
-
-export { PokeState };
