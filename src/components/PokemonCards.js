@@ -15,16 +15,20 @@ const PokemonCards = ({ pokemon, setPokemon }) => {
   const shiftPokemonLeftcb = (pokeIndexToMove) => {
     const pokemonToMove = pokemon[pokeIndexToMove];
     const pokemonMovedTo = pokemon[pokeIndexToMove - 1];
-    pokemon[pokeIndexToMove - 1] = pokemonToMove;
-    pokemon[pokeIndexToMove] = pokemonMovedTo;
+    if (pokemonMovedTo) {
+      pokemon[pokeIndexToMove - 1] = pokemonToMove;
+      pokemon[pokeIndexToMove] = pokemonMovedTo;
+    }
     setPokemon([...pokemon]);
   };
 
   const shiftPokemonRightcb = (pokeIndexToMove) => {
     const pokemonToMove = pokemon[pokeIndexToMove];
     const pokemonMovedTo = pokemon[pokeIndexToMove + 1];
-    pokemon[pokeIndexToMove + 1] = pokemonToMove;
-    pokemon[pokeIndexToMove] = pokemonMovedTo;
+    if (pokemonMovedTo) {
+      pokemon[pokeIndexToMove + 1] = pokemonToMove;
+      pokemon[pokeIndexToMove] = pokemonMovedTo;
+    }
     setPokemon([...pokemon]);
   };
 

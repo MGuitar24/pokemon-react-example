@@ -8,6 +8,9 @@ import { useState, useEffect } from "react";
 import SearchPokemon from "./controller/SearchPokemon";
 import PokemonCards from "./components/PokemonCards";
 import originalPokemon from "./controller/originalPokemon";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -104,7 +107,9 @@ const App = () => {
           Search
         </Button>
       </div>
-      <PokemonCards pokemon={pokemon} setPokemon={setPokemon} />
+      <QueryClientProvider client={queryClient}>
+        <PokemonCards pokemon={pokemon} setPokemon={setPokemon} />
+      </QueryClientProvider>
     </>
   );
 };

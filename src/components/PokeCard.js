@@ -7,6 +7,7 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Typography from "@material-ui/core/Typography";
+import { useDescription } from "../controller/SearchPokemon";
 
 const useStyles = makeStyles({
   root: {
@@ -22,6 +23,8 @@ const useStyles = makeStyles({
 
 const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokemonRightcb }) => {
   const classes = useStyles();
+  const { data } = useDescription(pokemon.pokeDescriptionURL);
+  const description = data;
 
   return (
     <Card className={classes.root}>
@@ -31,7 +34,7 @@ const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokem
           {pokemon.pokeName}
         </Typography>
         <Typography style={{ height: 200 }} variant="body2" component="p">
-          {pokemon.pokeDescription}
+          {description}
         </Typography>
       </CardContent>
       <CardActions style={{ justifyContent: "center" }}>
