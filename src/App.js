@@ -14,6 +14,11 @@ const Alert = (props) => {
 };
 
 const App = () => {
+  const [pokemon, setPokemon] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [noResultSearchValue, setNoResultSearchValue] = useState("");
+
   const enterPressed = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -32,11 +37,6 @@ const App = () => {
       window.removeEventListener("keydown", enterPressed);
     };
   });
-
-  const [pokemon, setPokemon] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
-  const [snackBarOpen, setSnackBarOpen] = useState(false);
-  const [noResultSearchValue, setNoResultSearchValue] = useState("");
 
   const updateValue = (event, value, reason) => {
     setSearchValue(value.toLowerCase());
@@ -81,8 +81,8 @@ const App = () => {
           style={{ width: 300, display: "inline-block", verticalAlign: "top" }}
           freeSolo
           id="free-solo"
-          value={searchValue}
-          onChange={updateValue}
+          inputValue={searchValue}
+          onInputChange={updateValue}
           disableClearable
           options={originalPokemon}
           renderInput={(params) => (
