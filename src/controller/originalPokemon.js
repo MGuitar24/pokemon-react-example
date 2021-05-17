@@ -27,7 +27,6 @@ const originalPokemon = [
   "Raichu",
   "Sandshrew",
   "Sandlash",
-  "Nidoran",
   "Nidorina",
   "Nidoqueen",
   "Nidorino",

@@ -34,7 +34,7 @@ const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokem
           {pokemon.pokeDescription}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions style={{ justifyContent: "center" }}>
         <IconButton
           onClick={() => {
             shiftPokemonLeftcb(index);
