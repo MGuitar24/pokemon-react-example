@@ -3,9 +3,11 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState, useEffect } from "react";
 import SearchPokemon from "./controller/SearchPokemon";
 import PokemonCards from "./components/PokemonCards";
+import originalPokemon from "./controller/originalPokemon";
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -36,8 +38,8 @@ const App = () => {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [noResultSearchValue, setNoResultSearchValue] = useState("");
 
-  const updateValue = (e) => {
-    setSearchValue(e.target.value.toLowerCase());
+  const updateValue = (event, value, reason) => {
+    setSearchValue(value.toLowerCase());
   };
 
   const onSearch = async () => {
@@ -75,16 +77,30 @@ const App = () => {
             No result found for search {noResultSearchValue}.
           </Alert>
         </Snackbar>
-        <TextField
-          style={{ margin: 0, paddingRight: 10, width: 300 }}
-          id="outlined-search"
+        <Autocomplete
+          style={{ width: 300, display: "inline-block", verticalAlign: "top" }}
+          freeSolo
+          id="free-solo"
           value={searchValue}
           onChange={updateValue}
-          label="Search pokemon"
-          type="search"
-          variant="outlined"
+          disableClearable
+          options={originalPokemon}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search pokemon"
+              variant="outlined"
+              margin="normal"
+              InputProps={{ ...params.InputProps, type: "search" }}
+            />
+          )}
         />
-        <Button style={{ height: 56 }} onClick={onSearch} variant="contained" color="primary">
+        <Button
+          style={{ height: 56, marginTop: 15, marginLeft: 15 }}
+          onClick={onSearch}
+          variant="contained"
+          color="primary"
+        >
           Search
         </Button>
       </div>

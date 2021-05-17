@@ -3,7 +3,6 @@ import PokeCard from "./PokeCard";
 import { ErrorBoundary } from "react-error-boundary";
 
 const ErrorCard = ({ error, resetErrorBoundary }) => {
-  console.log(error);
   return <p>Error loading pokemon card.</p>;
 };
 
