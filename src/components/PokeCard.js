@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -23,7 +24,18 @@ const useStyles = makeStyles({
 });
 
 const PokemonImage = ({ pokeImg, pokeName }) => {
-  return <img style={{ width: 300, height: 300 }} src={pokeImg} alt={pokeName} />;
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <div style={{ textAlign: "center" }}>
+      {!loaded ? <CircularProgress /> : null}
+      <img
+        style={loaded ? { width: 300, height: 300 } : { display: "none" }}
+        src={pokeImg}
+        alt={pokeName}
+        onLoad={() => setLoaded(true)}
+      />
+    </div>
+  );
 };
 
 const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokemonRightcb }) => {
