@@ -33,7 +33,7 @@ const loadDescription = async (url) => {
   descriptions = descriptions.slice(0, 5);
   descriptions = descriptions.map((description) => description.flavor_text);
   descriptions = descriptions.filter((description, index) => descriptions.indexOf(description) === index);
-  const description = descriptions.join("");
+  const description = descriptions.join("").replace(/[^a-z0-9]/gim, " ");
   return description;
 };
 
