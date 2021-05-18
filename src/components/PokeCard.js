@@ -13,7 +13,11 @@ import { useDescription } from "../controller/SearchPokemon";
 
 const useStyles = makeStyles({
   root: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
     minWidth: 335,
+    minHeight: 630,
   },
   title: {
     fontSize: 14,
