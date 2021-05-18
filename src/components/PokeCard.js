@@ -27,6 +27,32 @@ const useStyles = makeStyles({
   },
 });
 
+const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokemonRightcb }) => {
+  const classes = useStyles();
+  const { isLoading, data } = useDescription(pokemon.pokeDescriptionURL);
+  const description = data;
+
+  return (
+    <Card className={classes.root}>
+      <CardContent>
+        <PokemonImage pokeImg={pokemon.pokeImg} pokeName={pokemon.pokeName} />
+        <Typography style={{ textAlign: "center" }} variant="h5" component="h2">
+          {pokemon.pokeName}
+        </Typography>
+        <PokemonDescription description={description} isLoading={isLoading} />
+      </CardContent>
+      <CardActions style={{ justifyContent: "center" }}>
+        <ButtonGroup
+          index={index}
+          deletePokecb={deletePokecb}
+          shiftPokemonLeftcb={shiftPokemonLeftcb}
+          shiftPokemonRightcb={shiftPokemonRightcb}
+        />
+      </CardActions>
+    </Card>
+  );
+};
+
 const PokemonImage = ({ pokeImg, pokeName }) => {
   const [loaded, setLoaded] = useState(false);
   return (
@@ -42,65 +68,60 @@ const PokemonImage = ({ pokeImg, pokeName }) => {
   );
 };
 
-const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokemonRightcb }) => {
-  const classes = useStyles();
-  const { isLoading, data } = useDescription(pokemon.pokeDescriptionURL);
-  const description = data;
-
+const PokemonDescription = ({ description, isLoading }) => {
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <PokemonImage pokeImg={pokemon.pokeImg} pokeName={pokemon.pokeName} />
-        <Typography style={{ textAlign: "center" }} variant="h5" component="h2">
-          {pokemon.pokeName}
+    <>
+      {isLoading ? (
+        <div style={{ textAlign: "center" }}>
+          <Skeleton animation="wave" />
+          <Skeleton animation="wave" />
+          <Skeleton animation="wave" />
+          <Skeleton animation="wave" />
+          <Skeleton animation="wave" width="60%" />
+        </div>
+      ) : (
+        <Typography style={{ height: 200 }} variant="body2" component="p">
+          {description}
         </Typography>
-        {isLoading ? (
-          <div style={{ textAlign: "center" }}>
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" />
-            <Skeleton animation="wave" width="60%" />
-          </div>
-        ) : (
-          <Typography style={{ height: 200 }} variant="body2" component="p">
-            {description}
-          </Typography>
-        )}
-      </CardContent>
-      <CardActions style={{ justifyContent: "center" }}>
-        <IconButton
-          onClick={() => {
-            shiftPokemonLeftcb(index);
-          }}
-          color="primary"
-          aria-label="left move card"
-          component="span"
-        >
-          <ArrowBackIcon />
-        </IconButton>
-        <IconButton
-          onClick={() => {
-            deletePokecb(index);
-          }}
-          color="primary"
-          aria-label="delete card"
-          component="span"
-        >
-          <DeleteOutlineIcon />
-        </IconButton>
-        <IconButton
-          onClick={() => {
-            shiftPokemonRightcb(index);
-          }}
-          color="primary"
-          aria-label="right move card"
-          component="span"
-        >
-          <ArrowForwardIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+      )}
+    </>
+  );
+};
+
+const ButtonGroup = ({ index, deletePokecb, shiftPokemonLeftcb, shiftPokemonRightcb }) => {
+  return (
+    <>
+      <IconButton
+        onClick={() => {
+          shiftPokemonLeftcb(index);
+        }}
+        color="primary"
+        aria-label="left move card"
+        component="span"
+      >
+        <ArrowBackIcon />
+      </IconButton>
+      <IconButton
+        onClick={() => {
+          deletePokecb(index);
+        }}
+        color="primary"
+        aria-label="delete card"
+        component="span"
+      >
+        <DeleteOutlineIcon />
+      </IconButton>
+      <IconButton
+        onClick={() => {
+          shiftPokemonRightcb(index);
+        }}
+        color="primary"
+        aria-label="right move card"
+        component="span"
+      >
+        <ArrowForwardIcon />
+      </IconButton>
+    </>
   );
 };
 
