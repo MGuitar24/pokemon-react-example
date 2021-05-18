@@ -55,7 +55,7 @@ const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }
         inputValue={searchValue}
         onInputChange={updateValue}
         disableClearable
-        options={originalPokemon}
+        options={originalPokemon.sort()}
         renderInput={(params) => (
           <TextField
             {...params}
