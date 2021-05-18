@@ -7,6 +7,7 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { useDescription } from "../controller/SearchPokemon";
 
 const useStyles = makeStyles({
@@ -21,21 +22,31 @@ const useStyles = makeStyles({
   },
 });
 
+const PokemonImage = ({ pokeImg, pokeName }) => {
+  return <img style={{ width: 300, height: 300 }} src={pokeImg} alt={pokeName} />;
+};
+
 const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokemonRightcb }) => {
   const classes = useStyles();
-  const { data } = useDescription(pokemon.pokeDescriptionURL);
+  const { isLoading, data } = useDescription(pokemon.pokeDescriptionURL);
   const description = data;
 
   return (
     <Card className={classes.root}>
       <CardContent>
-        <img style={{ width: 300, height: 300 }} src={pokemon.pokeImg} alt={pokemon.pokeName} />
-        <Typography variant="h5" component="h2">
+        <PokemonImage pokeImg={pokemon.pokeImg} pokeName={pokemon.pokeName} />
+        <Typography style={{ textAlign: "center" }} variant="h5" component="h2">
           {pokemon.pokeName}
         </Typography>
-        <Typography style={{ height: 200 }} variant="body2" component="p">
-          {description}
-        </Typography>
+        {isLoading ? (
+          <div style={{ textAlign: "center" }}>
+            <CircularProgress />
+          </div>
+        ) : (
+          <Typography style={{ height: 200 }} variant="body2" component="p">
+            {description}
+          </Typography>
+        )}
       </CardContent>
       <CardActions style={{ justifyContent: "center" }}>
         <IconButton

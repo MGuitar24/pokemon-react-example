@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { pokemonRequest, genericPokemonAPIRequest } from "../api/pokemonRequest";
 
-const SearchPokemon = async (searchValue, pokemon) => {
+const searchPokemon = async (searchValue, pokemon) => {
   const pokeState = {
     pokeImg: undefined,
     pokeName: undefined,
@@ -41,6 +41,4 @@ const useDescription = (descriptionURL) => {
   return useQuery(["descriptionURL", descriptionURL], () => loadDescription(descriptionURL));
 };
 
-export { useDescription };
-
-export default SearchPokemon;
+export { useDescription, searchPokemon };

@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState, useEffect } from "react";
 import originalPokemon from "../controller/originalPokemon";
-import SearchPokemon from "../controller/SearchPokemon";
+import { searchPokemon } from "../controller/SearchPokemon";
 
 const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -31,7 +31,7 @@ const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }
     if (!searchValue) {
       return;
     }
-    const pokemonResult = await SearchPokemon(searchValue, pokemon);
+    const pokemonResult = await searchPokemon(searchValue, pokemon);
     if (pokemonResult.pokemonStatus === 404) {
       setNoResultSearchValue(searchValue);
       setSnackBarOpen(true);
