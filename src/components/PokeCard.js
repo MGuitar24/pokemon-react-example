@@ -8,7 +8,7 @@ import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Skeleton from "@material-ui/lab/Skeleton";
 import { useDescription } from "../controller/SearchPokemon";
 
 const useStyles = makeStyles({
@@ -31,7 +31,7 @@ const PokemonImage = ({ pokeImg, pokeName }) => {
   const [loaded, setLoaded] = useState(false);
   return (
     <div style={{ textAlign: "center" }}>
-      {!loaded ? <CircularProgress /> : null}
+      {!loaded ? <Skeleton animation="wave" variant="rect" width={300} height={300} /> : null}
       <img
         style={loaded ? { width: 300, height: 300 } : { display: "none" }}
         src={pokeImg}
@@ -56,7 +56,11 @@ const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokem
         </Typography>
         {isLoading ? (
           <div style={{ textAlign: "center" }}>
-            <CircularProgress />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" />
+            <Skeleton animation="wave" width="60%" />
           </div>
         ) : (
           <Typography style={{ height: 200 }} variant="body2" component="p">
