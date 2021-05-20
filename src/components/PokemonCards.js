@@ -35,9 +35,6 @@ const PokemonCards = ({ pokemon, setPokemon }) => {
   return (
     <div className="PokemonCards">
       {pokemon.map((pokemon, pokeindex) => {
-        if (!pokemon.pokeImg || !pokemon.pokeName) {
-          return null;
-        }
         return (
           <div key={pokemon.pokeName} className="PokeCard">
             <ErrorBoundary FallbackComponent={ErrorCard}>

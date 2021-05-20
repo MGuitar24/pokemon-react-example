@@ -9,14 +9,14 @@ import { searchPokemon } from "../controller/SearchPokemon";
 const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }) => {
   const [searchValue, setSearchValue] = useState("");
 
-  const updateValue = (event, value, reason) => {
-    setSearchValue(value.toLowerCase());
+  const updateValue = (event, value) => {
+    setSearchValue(value);
   };
 
   const enterPressed = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      onSearch(searchValue);
+      onSearch();
     }
   };
 
@@ -31,34 +31,35 @@ const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }
     if (!searchValue) {
       return;
     }
-    const pokemonResult = await searchPokemon(searchValue, pokemon);
+    const pokemonResult = await searchPokemon(searchValue.toLowerCase(), pokemon);
     if (pokemonResult.pokemonStatus === 404) {
       setNoResultSearchValue(searchValue);
       setSnackBarOpen(true);
       setSearchValue("");
       return;
     }
-
     if (pokemonResult.pokeState) {
       setPokemon([...pokemon, pokemonResult.pokeState]);
+      setSearchValue("");
     }
-
-    setSearchValue("");
   };
 
   return (
     <div className="Search">
       <Autocomplete
+        title="searchAutoComplete"
         style={{ width: 300, display: "inline-block", verticalAlign: "top" }}
         freeSolo
         id="free-solo"
         inputValue={searchValue}
         onInputChange={updateValue}
         disableClearable
+        openOnFocus
         options={originalPokemon.sort()}
         renderInput={(params) => (
           <TextField
             {...params}
+            title="searchTextField"
             label="Search pokemon"
             variant="outlined"
             margin="normal"
@@ -67,6 +68,7 @@ const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }
         )}
       />
       <Button
+        title="searchButton"
         style={{ height: 56, marginTop: 15, marginLeft: 15 }}
         onClick={onSearch}
         variant="contained"
