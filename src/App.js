@@ -1,4 +1,3 @@
-import "./App.css";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useState } from "react";
