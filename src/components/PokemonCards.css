@@ -1,11 +1,14 @@
 .PokemonCards {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
     padding: 20px;
 }
 
 .PokeCard {
-    display: inline-block;
-    vertical-align: top;
     width: 340px;
-    height: 620px;
+    height: 635px;
     margin: 15px;
 }
