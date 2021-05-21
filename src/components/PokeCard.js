@@ -9,7 +9,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Typography from "@material-ui/core/Typography";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { useDescription } from "../controller/SearchPokemon";
+import { useDescription } from "../controllers/SearchPokemon";
 
 const useStyles = makeStyles({
   root: {

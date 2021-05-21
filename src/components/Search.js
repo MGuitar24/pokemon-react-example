@@ -3,8 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState, useEffect } from "react";
-import originalPokemon from "../controller/originalPokemon";
-import { searchPokemon } from "../controller/SearchPokemon";
+import originalPokemon from "../controllers/originalPokemon";
+import OnSearch from "../handlers/OnSearch";
 
 const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }) => {
   const [searchValue, setSearchValue] = useState("");
@@ -16,7 +16,7 @@ const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }
   const enterPressed = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      onSearch();
+      OnSearch(searchValue, setSearchValue, pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen);
     }
   };
 
@@ -26,23 +26,6 @@ const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }
       window.removeEventListener("keydown", enterPressed);
     };
   });
-
-  const onSearch = async () => {
-    if (!searchValue) {
-      return;
-    }
-    const pokemonResult = await searchPokemon(searchValue.toLowerCase(), pokemon);
-    if (pokemonResult.pokemonStatus === 404) {
-      setNoResultSearchValue(searchValue);
-      setSnackBarOpen(true);
-      setSearchValue("");
-      return;
-    }
-    if (pokemonResult.pokeState) {
-      setPokemon([...pokemon, pokemonResult.pokeState]);
-      setSearchValue("");
-    }
-  };
 
   return (
     <div className="Search">
@@ -70,7 +53,9 @@ const Search = ({ pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen }
       <Button
         title="searchButton"
         style={{ height: 56, marginTop: 15, marginLeft: 15 }}
-        onClick={onSearch}
+        onClick={() => {
+          OnSearch(searchValue, setSearchValue, pokemon, setPokemon, setNoResultSearchValue, setSnackBarOpen);
+        }}
         variant="contained"
         color="primary"
       >

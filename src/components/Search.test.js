@@ -1,19 +1,17 @@
 import { render, fireEvent, act } from "@testing-library/react";
 
 import Search from "./Search";
-import originalPokemon from "../controller/originalPokemon";
-import { searchPokemon } from "../controller/SearchPokemon";
+import originalPokemon from "../controllers/originalPokemon";
+import OnSearch from "../handlers/OnSearch";
 
-jest.mock("../controller/SearchPokemon", () => ({
-  searchPokemon: () => {
-    const pokeState = undefined;
-    const pokemonStatus = undefined;
-
-    return new Promise((resolve) => {
-      resolve({ pokeState, pokemonStatus });
-    });
-  },
+jest.mock("../handlers/OnSearch", () => ({
+  __esModule: true,
+  default: jest.fn(),
 }));
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe("search elements rendered", () => {
   it("searchTextField did render", () => {
@@ -58,5 +56,18 @@ describe("searchAutoComplete", () => {
 
       expect(searchAutoCompleteInput.value).toBe(pokemon);
     }
+
+    expect(OnSearch.mock.calls.length).toBe(originalPokemon.length);
+  });
+});
+
+describe("searchButton", () => {
+  it("OnSearch handler is called when button is clicked", () => {
+    const { queryByTitle } = render(<Search />);
+    const searchButton = queryByTitle("searchButton");
+
+    fireEvent.click(searchButton);
+
+    expect(OnSearch.mock.calls.length).toBe(1);
   });
 });
