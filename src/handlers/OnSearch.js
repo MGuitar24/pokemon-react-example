@@ -5,16 +5,16 @@ const OnSearch = async (searchValue, setSearchValue, pokemon, setPokemon, setNoR
     return;
   }
 
-  const pokemonResult = await searchPokemon(searchValue.toLowerCase(), pokemon);
+  const pokemonResult = await searchPokemon(searchValue.toLowerCase());
 
-  const { pokemonStatus, pokeState } = pokemonResult;
+  const { pokeState, pokemonStatus } = pokemonResult;
+
+  const dupe = pokemon.find((poke) => poke.pokeName === pokeState.pokeName);
 
   if (pokemonStatus !== 200) {
     setNoResultSearchValue(searchValue);
     setSnackBarOpen(true);
-  }
-
-  if (pokeState) {
+  } else if (!dupe) {
     setPokemon([...pokemon, pokeState]);
   }
 

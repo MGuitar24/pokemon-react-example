@@ -1,29 +1,21 @@
 import { useQuery } from "react-query";
 import { pokemonRequest, genericPokemonAPIRequest } from "../api/pokemonRequest";
 
-const searchPokemon = async (searchValue, pokemon) => {
-  const pokeState = {
-    pokeImg: undefined,
-    pokeName: undefined,
-    pokeDescription: undefined,
-    pokeDescriptionURL: undefined,
-  };
-  const pokemonResult = await pokemonRequest(searchValue);
-  const pokemonStatus = pokemonResult.status;
+const searchPokemon = async (searchValue) => {
+  const { status, data } = await pokemonRequest(searchValue);
 
-  const dupe = pokemon.find((poke) => poke.pokeName === pokemonResult.data.name);
-  if (dupe || pokemonStatus === 404) {
-    return { pokemonStatus };
+  try {
+    return {
+      pokemonStatus: status,
+      pokeState: {
+        pokeImg: data.sprites.other["official-artwork"].front_default,
+        pokeName: data.name,
+        pokeDescriptionURL: data.species.url,
+      },
+    };
+  } catch (e) {
+    return { pokemonStatus: status };
   }
-
-  if (pokemonResult.data.name && pokemonResult.data.sprites) {
-    pokeState.pokeName = pokemonResult.data.name;
-    pokeState.pokeImg = pokemonResult.data.sprites.other["official-artwork"].front_default;
-  }
-  if (pokemonResult.data.species) {
-    pokeState.pokeDescriptionURL = pokemonResult.data.species.url;
-  }
-  return { pokeState, pokemonStatus };
 };
 
 const loadDescription = async (url) => {
