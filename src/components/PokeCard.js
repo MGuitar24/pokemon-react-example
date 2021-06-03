@@ -10,14 +10,17 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import Typography from "@material-ui/core/Typography";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { useDescription } from "../controllers/SearchPokemon";
+import "./PokeCard.css";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    minWidth: 335,
-    minHeight: 630,
+    width: 335,
+    height: 630,
+    border: "15px solid #f6c332;",
+    backgroundColor: "#fde36a;",
   },
   title: {
     fontSize: 14,
@@ -34,11 +37,9 @@ const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokem
 
   return (
     <Card className={classes.root}>
-      <CardContent>
+      <CardContent style={{ paddingBottom: 0 }}>
+        <PokemonName pokeName={pokemon.pokeName} />
         <PokemonImage pokeImg={pokemon.pokeImg} pokeName={pokemon.pokeName} />
-        <Typography style={{ textAlign: "center" }} variant="h5" component="h2">
-          {pokemon.pokeName}
-        </Typography>
         <PokemonDescription description={description} isLoading={isLoading} />
       </CardContent>
       <CardActions style={{ justifyContent: "center" }}>
@@ -53,13 +54,21 @@ const PokeCard = ({ index, pokemon, deletePokecb, shiftPokemonLeftcb, shiftPokem
   );
 };
 
+const PokemonName = ({ pokeName }) => {
+  return (
+    <Typography variant="h5" component="h2">
+      {pokeName}
+    </Typography>
+  );
+};
+
 const PokemonImage = ({ pokeImg, pokeName }) => {
   const [loaded, setLoaded] = useState(false);
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center", paddingTop: 10 }}>
       {!loaded ? <Skeleton animation="wave" variant="rect" width={300} height={300} /> : null}
       <img
-        style={loaded ? { width: 300, height: 300 } : { display: "none" }}
+        className={loaded ? "PokeCardImg" : "DisplayNone"}
         src={pokeImg}
         alt={pokeName}
         onLoad={() => setLoaded(true)}
